@@ -8,12 +8,12 @@ namespace dirichletProblem.getterOfValues
 {
     class BorderValues
     {
-        public List<double> bottom { get; private set; }
-        public List<double> top { get; private set; }
-        public List<double> left { get; private set; }
-        public List<double> right { get; private set; }
+        public List<double> bottom { get; protected set; }
+        public List<double> top { get; protected set; }
+        public List<double> left { get; protected set; }
+        public List<double> right { get; protected set; }
 
-        public Rectangle rectangle { get; private set; }
+        public Rectangle rectangle { get; protected set; }
 
         public int sizeX { get { return bottom.Count; } }
 
@@ -37,7 +37,7 @@ namespace dirichletProblem.getterOfValues
 
         public double endY { get { return rectangle.endY; } }
 
-        public BorderValues(Rectangle rectangle, int numPointX, int numPointY, Function u)
+        protected virtual void getValues(Rectangle rectangle, int numPointX, int numPointY, Function u)
         {
             this.rectangle = rectangle;
 
@@ -52,7 +52,7 @@ namespace dirichletProblem.getterOfValues
             for (int x = 0; x < numPointX; x++)
             {
                 bottom.Add(u.getValue(rectangle.beginX + x*stepX, rectangle.beginY));
-                top.Add(u.getValue(rectangle.beginX + x*stepX, rectangle.endY));
+                top.Add(u.getValue(rectangle.beginX + x * stepX, rectangle.endY));
             }
 
             for (int y = 0; y < numPointY; y++)
@@ -60,6 +60,11 @@ namespace dirichletProblem.getterOfValues
                 left.Add(u.getValue(rectangle.beginX, rectangle.beginY + y * stepY));
                 right.Add(u.getValue(rectangle.endX, rectangle.beginY + y * stepY));
             }
+        }
+
+        public BorderValues(Rectangle rectangle, int numPointX, int numPointY, Function u)
+        {
+            getValues(rectangle, numPointX, numPointY, u);
         }
     }
 }

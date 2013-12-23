@@ -12,7 +12,7 @@ namespace dirichletProblem.Functions
 
         public override double getValue(double x, double y)
         {
-            return Math.Abs(x * x - y * y);
+            return 0;
         }
     }
 }

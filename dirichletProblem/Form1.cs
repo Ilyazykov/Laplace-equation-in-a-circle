@@ -12,7 +12,7 @@ namespace dirichletProblem
 {
     public partial class Form1 : Form
     {
-        int task = 1;
+        int task = 2;
 
         int sizeX = 15;
         int sizeY = 15;
@@ -34,9 +34,10 @@ namespace dirichletProblem
         {
             InitializeComponent();
 
-            one = new testFunction();
-            two = new testDifferentialEquation();
-            u = new FunctionU();
+            one = new mainDifferentialEquation();
+            two = new mainDifferentialEquation();
+            u = new FunctionUMain();
+
             rectangle = new Rectangle(-1, 1, -1, 1);
         }
 
@@ -44,8 +45,8 @@ namespace dirichletProblem
         {
             eps = Convert.ToDouble(textBox1.Text);
 
-            BorderValues borderValuesOne = new BorderValues(rectangle, sizeX, sizeY, u);
-            BorderValues borderValuesTwo = new BorderValues(rectangle, sizeX*task - task + 1, sizeY*task -task + 1, u);
+            BorderValues borderValuesOne = new BorderValuesInCircle(rectangle, sizeX, sizeY, u);
+            BorderValues borderValuesTwo = new BorderValuesInCircle(rectangle, sizeX*task - task + 1, sizeY*task -task + 1, u);
 
             tableOne = two.getValues(borderValuesOne, numberOfIteration, eps);
             tableTwo = one.getValues(borderValuesTwo, numberOfIteration, eps);
@@ -111,22 +112,6 @@ namespace dirichletProblem
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             sizeY = (int)numericUpDown2.Value;
-        }
-
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-            task = 1;
-            one = new testFunction();
-            two = new testDifferentialEquation();
-            u = new FunctionU();
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-            task = 2;
-            one = new mainDifferentialEquation();
-            two = new mainDifferentialEquation();
-            u = new FunctionUMain();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
