@@ -12,7 +12,7 @@ namespace dirichletProblem.Functions
 
         public override double getValue(double x, double y)
         {
-            return (Math.Cos(Math.PI * x * y));
+            return (Math.Sin(Math.PI*x*y));
         }
     }
 }

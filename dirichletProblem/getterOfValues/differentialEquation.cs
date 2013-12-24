@@ -104,29 +104,30 @@ namespace dirichletProblem.getterOfValues
                             double vright = v[i + 1, j];
                             double vup = v[i, j + 1];
                             double vdown = v[i, j - 1];
+                            
 
-                            if (v[i - 1, j] == -1) { tempH = Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); vleft = v[0, j]; }
-                            else if (v[i + 1, j] == -1) { tempH = Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); vright = v[n, j]; }
-                            else if (i == 1) { tempH = Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); }
-                            else if (i == n - 1) { tempH = Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); }
+                            if (v[i - 1, j] == -1) { tempH = -1/Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); vleft = v[0, j]; } //TODO что то не то вычисляю я в tempH
+                            else if (v[i + 1, j] == -1) { tempH = -1/Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); vright = v[n, j]; }
+                            else if (i == 1) { tempH = -1/Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); }
+                            else if (i == n - 1) { tempH = -1/Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); }
 
-                            if (v[i, j - 1] == -1) { tempK = Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); vdown = v[i, 0]; }
-                            else if (v[i, j + 1] == -1) { tempK = Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); vup = v[i, m]; }
-                            else if (j == 1) { tempK = Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); }
-                            else if (j == m - 1) { tempK = Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); }
+                            if (v[i, j - 1] == -1) { tempK = -1/Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); vdown = v[i, 0]; }
+                            else if (v[i, j + 1] == -1) { tempK = -1/Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); vup = v[i, m]; }
+                            else if (j == 1) { tempK = -1/Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); }
+                            else if (j == m - 1) { tempK = -1/Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); }
 
+                            double tempA = -2 * (tempH + tempK);
 
                             v_old = v[i, j];
                             v_new = -1 * (tempH * (vright + vleft) + tempK * (vup + vdown));
                             v_new = v_new + f[i, j];
-                            v_new = v_new / a2;
+                            v_new = v_new / tempA;
                             eps_cur = Math.Abs(v_old - v_new);
                             if (eps_cur > eps_max)
                             {
                                 eps_max = eps_cur;
                             }
                             v[i, j] = v_new;
-                            //v[i, j] = 11;//TODO временно, чтобы узнавать где круг
                         }
                     }
                 S++;
