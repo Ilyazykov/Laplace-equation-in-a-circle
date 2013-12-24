@@ -118,5 +118,15 @@ namespace dirichletProblem
         {
             
         }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            u = new FunctionUMain();
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            u = new FunctionConst();
+        }
     }
 }

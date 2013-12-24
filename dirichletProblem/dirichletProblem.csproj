@@ -53,6 +53,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\Function.cs" />
+    <Compile Include="Functions\FunctionConst.cs" />
     <Compile Include="Functions\FunctionFmain.cs" />
     <Compile Include="Functions\FunctionUMain.cs" />
     <Compile Include="getterOfValues\BorderValues.cs" />
