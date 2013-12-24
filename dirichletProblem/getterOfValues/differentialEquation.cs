@@ -65,18 +65,13 @@ namespace dirichletProblem.getterOfValues
 
             double h2 = (-n*n) / ((b-a)*(b-a));
             double k2 = (-m*m) / ((d-c)*(d-c));
-            double a2 = -2 * (h2 + k2);
 
             for (int i = 1; i < n; i++)
             {
                 for (int j = 1; j < m; j++)
                 {
-                    v[i, j] = -1.0;
+                    v[i, j] = 0.0;
                     f[i, j] = F.getValue(x[i], y[j]);
-                    if (inCircle(x[i], y[j]))
-                    {
-                        v[i, j] = 0.0;
-                    }
                 }
             }
             for (int i = 0; i < n + 1; i++)
@@ -106,15 +101,11 @@ namespace dirichletProblem.getterOfValues
                             double vdown = v[i, j - 1];
                             
 
-                            if (v[i - 1, j] == -1) { tempH = -1/Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); vleft = v[0, j]; } //TODO что то не то вычисляю я в tempH
-                            else if (v[i + 1, j] == -1) { tempH = -1/Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); vright = v[n, j]; }
-                            else if (i == 1) { tempH = -1/Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); }
-                            else if (i == n - 1) { tempH = -1/Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); }
+                            if (!inCircle(x[i-1], y[j])) { tempH = -1/Math.Pow((x[i] + Math.Sqrt(1 - y[j] * y[j])), 2); vleft = v[0, j]; }
+                            if (!inCircle(x[i+1], y[j])) { tempH = -1 / Math.Pow((x[i] - Math.Sqrt(1 - y[j] * y[j])), 2); vright = v[n, j]; }
 
-                            if (v[i, j - 1] == -1) { tempK = -1/Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); vdown = v[i, 0]; }
-                            else if (v[i, j + 1] == -1) { tempK = -1/Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); vup = v[i, m]; }
-                            else if (j == 1) { tempK = -1/Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); }
-                            else if (j == m - 1) { tempK = -1/Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); }
+                            if (!inCircle(x[i], y[j-1])) { tempK = -1 / Math.Pow((y[j] + Math.Sqrt(1 - x[i] * x[i])), 2); vdown = v[i, 0]; }
+                            if (!inCircle(x[i], y[j+1])) { tempK = -1 / Math.Pow((y[j] - Math.Sqrt(1 - x[i] * x[i])), 2); vup = v[i, m]; }
 
                             double tempA = -2 * (tempH + tempK);
 
